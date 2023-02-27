@@ -1,0 +1,2 @@
+# custombaseAdapterdialog
+ 
