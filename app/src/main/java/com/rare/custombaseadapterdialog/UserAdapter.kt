@@ -1,12 +1,16 @@
 package com.rare.custombaseadapterdialog
 
+import android.app.Dialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
 import android.widget.BaseAdapter
+import com.rare.custombaseadapterdialog.databinding.CustomdialogBinding
+import com.rare.custombaseadapterdialog.databinding.EditdialogBinding
+import com.rare.custombaseadapterdialog.databinding.StuListBinding
 
-class UserAdapter(var arrayList: ArrayList<UserModel>) : BaseAdapter() {
+class UserAdapter(var activity: MainActivity, var arrayList: ArrayList<UserModel>,var click: click) : BaseAdapter() {
     override fun getCount(): Int {
       return  arrayList.size
     }
@@ -15,13 +19,21 @@ class UserAdapter(var arrayList: ArrayList<UserModel>) : BaseAdapter() {
         return arrayList[position]
     }
     override fun getItemId(position: Int): Long {
-
-        return 123
+        return position.toLong()
     }
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.stu_list,parent,false)
+        val binding = StuListBinding.inflate(activity.layoutInflater)
+        binding.etAge.setText(arrayList[position].age.toString())
+        binding.etName.setText(arrayList[position].name.toString())
+        binding.etDistrict.setText(arrayList[position].district.toString())
+        binding.btnEdit.setOnClickListener {
+            click.editClick(position)
 
+        }
+        binding.btnDelete.setOnClickListener {
+            click.deleteClick(position)
+        }
 
-        return view
+        return binding.root
     }
 }
